@@ -7,6 +7,8 @@ public class Player {
     private String id;
     private String nickName;
     private Integer indexMove;
+    private int positionX;
+    private int positionY;
 
     public Player(String nickName) {
         this.nickName = nickName;
@@ -36,4 +38,19 @@ public class Player {
         this.nickName = nickName;
     }
 
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
+    }
 }

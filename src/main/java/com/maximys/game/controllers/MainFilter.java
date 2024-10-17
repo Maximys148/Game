@@ -22,7 +22,7 @@ public class MainFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse  = (HttpServletResponse) response;
         String token = httpRequest.getHeader("token");
-        if (httpRequest.getRequestURI().equals("/token/createToken")) {
+        if (httpRequest.getRequestURI().equals("/token/createToken") || httpRequest.getRequestURI().equals("/game/updateGameInfo")) {
             filterChain.doFilter(request, response);
             return;
         }

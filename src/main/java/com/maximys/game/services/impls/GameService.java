@@ -1,6 +1,5 @@
 package com.maximys.game.services.impls;
 
-import com.maximys.game.entities.Game;
 import com.maximys.game.entities.Player;
 import com.maximys.game.generator.MapGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GameService {
@@ -16,13 +16,11 @@ public class GameService {
     private Integer[][] map;
     @Autowired
     public GameService(MapGenerator mapGenerator, Integer[][] map) {
-        this.map = map;
+        this.map = mapGenerator.generateMaze();
         this.mapGenerator = new MapGenerator(10, 10);
     }
 
-    public Integer[][] createMap(){
-        Integer[][] newMap = mapGenerator.generateMaze();
-        map = newMap;
+    public Integer[][] getMap() {
         return map;
     }
     public Integer countPlayer(){
@@ -34,7 +32,18 @@ public class GameService {
                 return false;
         }
         Player player = new Player(nickname);
-        player.setIndexMove(players.size());
+        player.setIndexMove(players.size() + 1);
+        Random random = new Random();
+        while (true) {
+            int x = random.nextInt(10);
+            int y = random.nextInt(10);
+            if(map[x][y] == 0){
+                player.setPositionX(x);
+                player.setPositionY(y);
+                map[x][y] = player.getIndexMove() * 11;
+                break;
+            }
+        }
         players.add(player);
         return true;
     }
@@ -43,8 +52,10 @@ public class GameService {
         return players;
     }
     public Object getGameInfo(){
-        Integer[][] map = this.createMap();
         Object gameInfo = map + "\n" + countPlayer();
         return gameInfo;
+    }
+    public String move(String nickName, int x, int y){
+        return "Вы сделали успешный ход, ждите своей очереди";
     }
 }
