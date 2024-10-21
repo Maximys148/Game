@@ -17,7 +17,7 @@ public class GameService {
     @Autowired
     public GameService(MapGenerator mapGenerator, Integer[][] map) {
         this.map = mapGenerator.generateMaze();
-        this.mapGenerator = new MapGenerator(10, 10);
+        this.mapGenerator = new MapGenerator(10, 10, 5);
     }
 
     public Integer[][] getMap() {

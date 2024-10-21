@@ -14,6 +14,6 @@ public class AppConfig {
     }
     @Bean
     public MapGenerator mapGenerator(){
-        return new MapGenerator(20, 20);
+        return new MapGenerator(20,20,20);
     }
 }

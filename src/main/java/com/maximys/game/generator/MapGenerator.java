@@ -8,13 +8,15 @@ import java.util.Random;
 public class MapGenerator {
     private final int width;
     private final int height;
+    private final int numberOfFood;
     private final Integer[][] map;
     private final boolean[][] visited;
     private final Random random;
 
-    public MapGenerator(int width, int height) {
+    public MapGenerator(int width, int height, int numberOfFood) {
         this.width = width;
         this.height = height;
+        this.numberOfFood = numberOfFood;
         this.map = new Integer[height][width];
         this.visited = new boolean[height][width];
         this.random = new Random();
@@ -58,10 +60,25 @@ public class MapGenerator {
                 generatePath(newX, newY);
             }
         }
+        addFood(numberOfFood);
     }
 
     private boolean isInBounds(int x, int y) {
         return x > 0 && x < width && y > 0 && y < height;
+    }
+
+    public void addFood(int numberOfFood) {
+        int foodPlaced = 0;
+
+        while (foodPlaced < numberOfFood) {
+            int x = random.nextInt(width / 2) * 2 + 1; // Генерируем четные координаты
+            int y = random.nextInt(height / 2) * 2 + 1; // Генерируем четные координаты
+
+            if (map[y][x] == 0) { // Проверяем, что клетка проходимая
+                map[y][x] = 5; // Размещаем еду
+                foodPlaced++;
+            }
+        }
     }
 
     public Object printMap(Integer[][] map) {
