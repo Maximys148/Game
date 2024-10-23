@@ -1,6 +1,7 @@
 package com.maximys.game.entities;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 public class Player {
@@ -10,6 +11,7 @@ public class Player {
     private int positionX;
     private int positionY;
 
+    @Autowired
     public Player(String nickName) {
         this.nickName = nickName;
     }

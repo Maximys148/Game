@@ -26,7 +26,7 @@ public class GameController {
             return ResponseEntity.status(500).body("Игрок с таким никнеймом уже существует");
         if(gameService.countPlayer() <= 1)
             return ResponseEntity.status(500).body("Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:8090/game/updateGameInfo");
-        return ResponseEntity.ok(new Game(gameService.getPlayers(), gameService.getMap()));
+        return ResponseEntity.ok(gameService.getGameInfo());
     }
 
     @PostMapping(value = "/updateGameInfo")
