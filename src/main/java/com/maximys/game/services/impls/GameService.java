@@ -91,6 +91,10 @@ public class GameService {
         if ((deltaX + deltaY) != 1) {
             return "Недопустимое движение. Вы можете двигаться только на одну клетку.";
         }
+        if(map[newX][newY] == 5){
+            Integer countFood = player.getCountFood();
+            player.setCountFood(countFood + 1);
+        }
         if (map[newX][newY] != 0){
             return "На этом месте есть препятствие или игрок";
         }

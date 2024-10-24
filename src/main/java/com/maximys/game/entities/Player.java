@@ -10,10 +10,19 @@ public class Player {
     private Integer indexMove;
     private int positionX;
     private int positionY;
+    private Integer countFood;
 
     @Autowired
     public Player(String nickName) {
         this.nickName = nickName;
+    }
+
+    public Integer getCountFood() {
+        return countFood;
+    }
+
+    public void setCountFood(Integer countFood) {
+        this.countFood = countFood;
     }
 
     public Integer getIndexMove() {

@@ -38,5 +38,4 @@ public class TokenService implements TokenServiceInterface {
         return repository.findAll().stream()
                 .anyMatch(t -> t.getValue().equals(token));
     }
-
 }
