@@ -1,4 +1,4 @@
-package com.maximys.game.entities;
+package com.maximys.game.components;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,8 @@ public class Player {
     private Integer indexMove;
     private int positionX;
     private int positionY;
-    private Integer countFood;
+    private Integer countFood = 0;
 
-    @Autowired
     public Player(String nickName) {
         this.nickName = nickName;
     }

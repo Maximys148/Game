@@ -70,9 +70,8 @@ public class MapGenerator {
     public void addFood(int numberOfFood) {
         int foodPlaced = 0;
         while (foodPlaced < numberOfFood) {
-            int x = random.nextInt(width / 2) * 2 + 1; // Генерируем четные координаты
-            int y = random.nextInt(height / 2) * 2 + 1; // Генерируем четные координаты
-
+            int x = random.nextInt(width); // Генерируем четные координаты
+            int y = random.nextInt(height); // Генерируем четные координаты
             if (map[y][x] == 0) { // Проверяем, что клетка проходимая
                 map[y][x] = 5; // Размещаем еду
                 foodPlaced++;

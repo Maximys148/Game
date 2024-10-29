@@ -7,17 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.Random;
 
 @Service
 public class TokenService implements TokenServiceInterface {
     private final TokenRepository repository;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private final SecureRandom random;
+    private final Random random;
 
     @Autowired
-    public TokenService(TokenRepository repository, SecureRandom random){
+    public TokenService(TokenRepository repository){
         this.repository = repository;
-        this.random = random;
+        this.random = new Random();
     }
 
     private String generateToken() {

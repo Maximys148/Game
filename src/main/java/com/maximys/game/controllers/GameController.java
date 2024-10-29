@@ -1,6 +1,7 @@
 package com.maximys.game.controllers;
 
-import com.maximys.game.entities.Game;
+import com.maximys.game.dto.GameResponseDTO;
+import com.maximys.game.enums.ResponseStatus;
 import com.maximys.game.services.impls.GameService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.function.EntityResponse;
 
 @Slf4j
 @RestController
@@ -21,25 +23,26 @@ public class GameController {
         this.gameService = gameService;
     }
     @PostMapping(value = "/getGameInfo")
-    public ResponseEntity<Object> getGameInfo(@RequestParam ("nickname") String nickname){
-        if(!gameService.addPlayer(nickname))
-            return ResponseEntity.status(500).body("Игрок с таким никнеймом уже существует");
-        if(gameService.countPlayer() <= 1)
-            return ResponseEntity.status(500).body("Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:8090/game/updateGameInfo");
-        return ResponseEntity.ok(gameService.getGameInfo());
+    public ResponseEntity<GameResponseDTO> getGameInfo(@RequestParam ("nickname") String nickname){
+    if(!gameService.addPlayer(nickname))
+        return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_PLAYER_ALREADY_EXISTS,"Игрок с таким никнеймом уже существует", null));
+    if(gameService.countPlayer() <= 1)
+        return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_NOT_ENOUGH_PLAYERS, "Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:8090/game/updateGameInfo", null));
+    return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, gameService.getGameInfo(nickname)));
     }
 
     @PostMapping(value = "/updateGameInfo")
-    public ResponseEntity<Object> updateGameInfo(){
+    public ResponseEntity<GameResponseDTO> updateGameInfo(){
         if(gameService.countPlayer() <= 1)
-            return ResponseEntity.status(500).body("Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:8090/game/updateGameInfo");
-        return ResponseEntity.ok(new Game(gameService.getPlayers(), gameService.getMap()));
+            return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_NOT_ENOUGH_PLAYERS, "Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:8090/game/updateGameInfo", null));
+        return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, gameService.printMap()));
     }
     @PostMapping(value = "/move")
-    public ResponseEntity<Object> move(@RequestParam ("nickname") String nickname, @RequestParam("x") int x, @RequestParam("y") int y){
-        String move = gameService.move(nickname, x, y);
-        return ResponseEntity.ok(new Game(gameService.getPlayers(), gameService.getMap()));
+    public ResponseEntity<GameResponseDTO> move(@RequestParam ("nickname") String nickname, @RequestParam("x") int x, @RequestParam("y") int y){
+        String moveInfo = gameService.move(nickname, x, y);
+        if(!moveInfo.equals("Вы успешно сделали шаг")){
+            return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_PLAYER_MOVE, moveInfo, null));
+        }
+        return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, gameService.getMap()));
     }
-
-
 }
