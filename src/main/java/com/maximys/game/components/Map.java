@@ -1,11 +1,11 @@
-package com.maximys.game.generator;
+package com.maximys.game.components;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class MapGenerator {
+public class Map {
     private final int width;
     private final int height;
     private final int numberOfFood;
@@ -13,7 +13,7 @@ public class MapGenerator {
     private final boolean[][] visited;
     private final Random random;
 
-    public MapGenerator(int width, int height, int numberOfFood) {
+    public Map(int width, int height, int numberOfFood) {
         this.width = width;
         this.height = height;
         this.numberOfFood = numberOfFood;
@@ -35,16 +35,16 @@ public class MapGenerator {
         return map;
     }
 
-    private void generatePath(Integer x, Integer y) {
+    private void generatePath(int x, int y) {
         visited[y][x] = true;
         map[y][x] = 0; // Открываем клетку
 
         // Список направлений (восток, запад, юг, север)
         List<Integer[]> directions = new ArrayList<>();
-        directions.add(new Integer[]{0, 1}); // Восток
-        directions.add(new Integer[]{0, -1}); // Запад
-        directions.add(new Integer[]{1, 0}); // Южный
-        directions.add(new Integer[]{-1, 0}); // Северный
+        directions.add(new Integer[]{1, 0}); // Восток
+        directions.add(new Integer[]{-1, 0}); // Запад
+        directions.add(new Integer[]{0, 1}); // Южный
+        directions.add(new Integer[]{0, -1}); // Северный
 
         // Перемешиваем направления случайным образом
         Collections.shuffle(directions, random);
@@ -70,8 +70,8 @@ public class MapGenerator {
     public void addFood(int numberOfFood) {
         int foodPlaced = 0;
         while (foodPlaced < numberOfFood) {
-            int x = random.nextInt(width); // Генерируем четные координаты
-            int y = random.nextInt(height); // Генерируем четные координаты
+            int x = random.nextInt(width); // Генерируем координаты по ширине
+            int y = random.nextInt(height); // Генерируем координаты по высоте
             if (map[y][x] == 0) { // Проверяем, что клетка проходимая
                 map[y][x] = 5; // Размещаем еду
                 foodPlaced++;
@@ -79,10 +79,12 @@ public class MapGenerator {
         }
     }
 
-    public Object printMap(Integer[][] map) {
+    public void printMap() {
         for (Integer[] row : map) {
-            System.out.println(row);
+            for (Integer cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
         }
-        return map;
     }
 }

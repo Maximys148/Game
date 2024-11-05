@@ -1,7 +1,7 @@
 package com.maximys.game.configs;
 
 import com.maximys.game.components.Game;
-import com.maximys.game.generator.MapGenerator;
+import com.maximys.game.components.Map;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,6 +11,6 @@ public class AppConfig {
     }
     @Bean
     public Game game(){
-        return new Game(new MapGenerator(20, 20, 1).generateMaze());
+        return new Game(new Map(20, 20, 1).generateMaze());
     }
 }

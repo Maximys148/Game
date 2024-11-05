@@ -75,20 +75,21 @@ public class Game {
             }
         }
         Player player = new Player(nickname);
-        if (players == null){
-            player.setIndexMove(0);
+        if (players.isEmpty()){
+            player.setIndexMove(1);
         }else {
-            player.setIndexMove(players.size());
+            player.setIndexMove(players.size() + 1);
         }
         Random random = new Random();
         //выдаю игроку стартовую позицию
         while (true) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-            if(map[x][y] == 0){
+            if(map[y][x] == 0){
                 player.setPositionX(x);
                 player.setPositionY(y);
-                map[x][y] = player.getIndexMove() * 11;
+                map[y][x] = player.getIndexMove() * 11;
+                player.setId(String.valueOf(player.getIndexMove() * 11));
                 break;
             }
         }
@@ -116,33 +117,50 @@ public class Game {
         }
         if (player == null)
             return "Такого игрока нет в игре";
-        if(player.getIndexMove() != indexMove % players.size()){
-            return "Не ваша очередь";
+
+        if (!player.getIndexMove().equals(1) && indexMove % players.size() == 1) {
+            if (player.getIndexMove() != indexMove % players.size()) {
+                return "Не ваша очередь";
+            }
         }
         indexMove++;
-        int x = player.getPositionX();
-        int y = player.getPositionY();
-        if (newX < 0 || newX >= map.length || newY < 0 || newY >= map[0].length) {
+
+        int x = player.getPositionX(); // Текущая позиция игрока по X
+        int y = player.getPositionY(); // Текущая позиция игрока по Y
+
+        // Проверка на выход за границы карты
+        if (newX < 0 || newX >= map[0].length || newY < 0 || newY >= map.length) {
             return "Выход за границы карты";
         }
+
         // Проверяем, что движение разрешено (т.е. только на одну клетку вверх, вниз, влево или вправо)
         int deltaX = Math.abs(x - newX);
         int deltaY = Math.abs(y - newY);
         if ((deltaX + deltaY) != 1) {
             return "Недопустимое движение. Вы можете двигаться только на одну клетку.";
         }
-        if(map[newX][newY] == 5){
+
+        // Проверка на наличие еды
+        if (map[newY][newX] == 5) { // Изменено с map[newX][newY] на map[newY][newX]
             Integer countFood = player.getCountFood();
             player.setCountFood(countFood + 1);
+            map[y][x] = 0; // Сброс старой позиции
+            player.setPositionX(newX);
+            player.setPositionY(newY);
+            map[newY][newX] = player.getIndexMove() * 11; // Изменено с map[newX][newY] на map[newY][newX]
+            return "Вы успешно сделали шаг и покушали)";
         }
-        if (map[newX][newY] != 0){
+        if (map[newY][newX] != 0) { // Изменено с map[newX][newY] на map[newY][newX]
             return "На этом месте есть препятствие или игрок";
         }
-        //После успешного прохождения всех условий обновляем карту и позицию игрока в его параметрах
-        map[x][y] = 0;
+
+        // Проверка на наличие препятствий
+
+        // Обновляем карту и позицию игрока
+        map[y][x] = 0; // Сброс старой позиции
         player.setPositionX(newX);
         player.setPositionY(newY);
-        map[newX][newY] = player.getIndexMove() * 11;
+        map[newY][newX] = player.getIndexMove() * 11; // Изменено с map[newX][newY] на map[newY][newX]
         return "Вы успешно сделали шаг";
     }
 }
