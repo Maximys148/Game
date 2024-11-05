@@ -1,3 +1,4 @@
+/*
 package com.maximys.game.controllers;
 
 import com.maximys.game.services.impls.TokenService;
@@ -36,3 +37,4 @@ public class MainFilter implements Filter {
         filterChain.doFilter(request, response);
     }
 }
+*/

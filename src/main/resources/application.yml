@@ -1,4 +1,8 @@
 spring:
+  mvc:
+    view:
+      prefix: "/WEB-INF/jsp/"
+      suffix: ".jsp"
   application:
     name: Game
   datasource:
@@ -16,4 +20,4 @@ spring:
       ddl-auto: update
 
 server:
-  port: 8090
+  port: 1111
