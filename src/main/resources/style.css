@@ -1,0 +1,61 @@
+<style>
+       .map caption {
+           text-align: center;
+           font-style: italic;
+       }
+       .map body {
+           font-family: Arial, sans-serif; /* Шрифт страницы */
+           text-align: center; /* Центрирование текста на странице */
+           background-color: #A9A9A9; /* Цвет фона страницы */
+       }
+       .map {
+           margin: 20px auto; /* Центрирование таблицы */
+           border-collapse: collapse; /* Объединение границ ячеек */
+           width: auto; /* Автоширина таблицы (можно задать фиксированную ширину) */
+       }
+       .map td {
+           width: 40px; /* Ширина ячейки */
+           height: 40px; /* Высота ячейки */
+           /*border: 3px solid #333; Граница ячейки */
+           background-color: #ffffff; /* Цвет фона ячейки */
+           text-align: center; /* Центрирование текста внутри ячейки */
+           vertical-align: middle; /* Вертикальное центрирование текста внутри ячейки */
+       }
+       .map th {
+           position: sticky;
+           top: 0;
+           border: 1px solid #333; /* */
+           padding: 3px; /* Поля в ячейках */
+       }
+   </style>
+   <style>
+       .list-of-players caption {
+           text-align: right;
+           font-style: italic;
+       }
+       .list-of-players body {
+           font-family: Arial, sans-serif; /* Шрифт страницы */
+           text-align: center; /* Центрирование текста на странице */
+           background-color: #FFFFFF; /* Цвет фона страницы */
+       }
+       .list-of-players td {
+           width: 20px; /* Ширина ячейки */
+           height: 20px; /* Высота ячейки */
+           background-color: #ffffff; /* Цвет фона ячейки */
+           text-align: center; /* Центрирование текста внутри ячейки */
+           vertical-align: middle; /* Вертикальное центрирование текста внутри ячейки */
+       }
+       .list-of-players td, th {
+           border: 1px solid #333; /* */
+           padding: 3px; /* Поля в ячейках */
+       }
+       .list-of-players table {
+           border-collapse: collapse; /* Убираем двойные границы */
+       }
+   </style>
+   <style>
+      body {
+         font-family: Arial, sans-serif; /* Шрифт страницы */
+         background: radial-gradient(circle farthest-corner at 30px 20px, #fff, #000);
+      }
+   </style>
