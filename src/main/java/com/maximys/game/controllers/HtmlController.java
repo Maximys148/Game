@@ -27,4 +27,9 @@ public class HtmlController {
         model.addObject("players", players);
         return model;
     }
+
+    @GetMapping(value = "/game1")
+    public String string1(){
+        return "game";
+    }
 }

@@ -8,8 +8,8 @@ import java.util.Random;
 public class Map {
     private final int width;
     private final int height;
-    private final int numberOfFood;
-    private final Integer[][] map;
+    private int numberOfFood;
+    private Integer[][] map;
     private final boolean[][] visited;
     private final Random random;
 
@@ -31,7 +31,7 @@ public class Map {
     }
 
     public Integer[][] generateMaze() {
-        generatePath(1, 1); // Начинаем с координат (1, 1)
+        generatePath(1, 1); // Начинаем с координат (0, 0)
         return map;
     }
 
@@ -60,21 +60,21 @@ public class Map {
                 generatePath(newX, newY);
             }
         }
-        addFood(numberOfFood);
+        addFood();
     }
 
     private boolean isInBounds(int x, int y) {
         return x > 0 && x < width && y > 0 && y < height;
     }
 
-    public void addFood(int numberOfFood) {
+    public void addFood() {
         int foodPlaced = 0;
-        while (foodPlaced < numberOfFood) {
+        while (numberOfFood != 0) {
             int x = random.nextInt(width); // Генерируем координаты по ширине
             int y = random.nextInt(height); // Генерируем координаты по высоте
             if (map[y][x] == 0) { // Проверяем, что клетка проходимая
                 map[y][x] = 5; // Размещаем еду
-                foodPlaced++;
+                numberOfFood--;
             }
         }
     }
