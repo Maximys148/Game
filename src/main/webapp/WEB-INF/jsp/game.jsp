@@ -14,6 +14,8 @@
                           <tr>
                               <th>ID</th>
                               <th>NickName</th>
+                              <th>X</th>
+                              <th>Y</th>
                               <th>Score</th>
                           </tr>
                        </head>
@@ -21,6 +23,8 @@
                               <tr align = "center">
                                   <td>${player.id}</td>
                                   <td align = "left">${player.nickName}</td>
+                                  <td>${player.positionX}</td>
+                                  <td>${player.positionY}</td>
                                   <td>${player.countFood}</td>
                               </tr>
                            </c:forEach>

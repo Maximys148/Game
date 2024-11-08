@@ -11,6 +11,6 @@ public class AppConfig {
     }
     @Bean
     public Game game(){
-        return new Game(new Map(20, 20, 1).generateMaze());
+        return new Game(new Map(20, 20, 3).generateMaze());
     }
 }

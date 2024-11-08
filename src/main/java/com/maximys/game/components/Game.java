@@ -19,7 +19,7 @@ public class Game {
     public Game(Integer[][] map) {
         this.players = new ArrayList<Player>();
         this.map = map;
-        this.indexMove = 0;
+        this.indexMove = 1;
     }
 
     public List<Player> getPlayers() {
@@ -118,12 +118,13 @@ public class Game {
         if (player == null)
             return "Такого игрока нет в игре";
 
-        if (!player.getIndexMove().equals(1) && indexMove % players.size() == 1) {
-            if (player.getIndexMove() != indexMove % players.size()) {
-                return "Не ваша очередь";
-            }
+        if (!player.getIndexMove().equals(indexMove)) {
+            return "Не ваша очередь";
+        }if (indexMove.equals(players.size())) {
+            indexMove = 1;
+        }else {
+            indexMove++;
         }
-        indexMove++;
 
         int x = player.getPositionX(); // Текущая позиция игрока по X
         int y = player.getPositionY(); // Текущая позиция игрока по Y
