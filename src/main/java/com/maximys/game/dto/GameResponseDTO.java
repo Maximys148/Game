@@ -1,5 +1,6 @@
 package com.maximys.game.dto;
 
+import com.maximys.game.enums.BodyType;
 import com.maximys.game.enums.ResponseStatus;
 
 import java.util.List;
@@ -7,20 +8,24 @@ import java.util.List;
 public class GameResponseDTO {
     private ResponseStatus status; // Используем Enum для статуса ответа
     private String message;
-    private Object data; // Можно заменить Object на конкретный тип данных, если необходимо
+    private String stringJSON; // Можно заменить Object на конкретный тип данных, если необходимо
+    private BodyType bodyType;
     private List<String> errors; // Список ошибок, если они есть
 
     // Конструкторы
-    public GameResponseDTO(ResponseStatus status, String message, Object data) {
+    public GameResponseDTO(ResponseStatus status, String message, String data, BodyType bodyType) {
         this.status = status;
         this.message = message;
-        this.data = data;
+        this.stringJSON = data;
+        this.bodyType = bodyType;
     }
 
-    public GameResponseDTO(ResponseStatus status, String message, List<String> errors) {
+    public GameResponseDTO(ResponseStatus status, String message) {
         this.status = status;
         this.message = message;
-        this.errors = errors;
+    }
+
+    public GameResponseDTO() {
     }
 
     // Геттеры и сеттеры
@@ -40,12 +45,12 @@ public class GameResponseDTO {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public Object getStringJSON() {
+        return stringJSON;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setStringJSON(String stringJSON) {
+        this.stringJSON = stringJSON;
     }
 
     public List<String> getErrors() {
@@ -54,5 +59,13 @@ public class GameResponseDTO {
 
     public void setErrors(List<String> errors) {
         this.errors = errors;
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 }

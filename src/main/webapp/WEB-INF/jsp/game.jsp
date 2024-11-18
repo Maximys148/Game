@@ -31,7 +31,7 @@
                   </table>
                </td>
                <td>
-                   <table border="1px" width="100%" height="100%">
+                   <table width="100%" height="100%">
                        <c:forEach var="row" items="${map}">
                            <tr>
                                <c:forEach var="cell" items="${row}">

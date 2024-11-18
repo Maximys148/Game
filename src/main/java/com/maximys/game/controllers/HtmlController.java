@@ -20,7 +20,7 @@ public class HtmlController {
     }
     @GetMapping(value = "")
     public ModelAndView game(ModelAndView model){
-        Integer[][] map = gameService.getMap();
+        Integer[][] map = gameService.printMap();
         List<Player> players = gameService.getPlayers();
         model.setViewName("game");
         model.addObject("map", map);

@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Map {
+public class GameMap {
     private final int width;
     private final int height;
     private int numberOfFood;
@@ -13,7 +13,7 @@ public class Map {
     private final boolean[][] visited;
     private final Random random;
 
-    public Map(int width, int height, int numberOfFood) {
+    public GameMap(int width, int height, int numberOfFood) {
         this.width = width;
         this.height = height;
         this.numberOfFood = numberOfFood;
@@ -28,6 +28,30 @@ public class Map {
                 visited[y][x] = false; // Все клетки изначально непосещены
             }
         }
+    }
+
+    public int getNumberOfFood() {
+        return numberOfFood;
+    }
+
+    public void setNumberOfFood(int numberOfFood) {
+        this.numberOfFood = numberOfFood;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Integer[][] getMap() {
+        return map;
+    }
+
+    public void setMap(Integer[][] map) {
+        this.map = map;
     }
 
     public Integer[][] generateMaze() {

@@ -1,6 +1,7 @@
 package com.maximys.game.services.impls;
 
 import com.maximys.game.components.Game;
+import com.maximys.game.components.GameMap;
 import com.maximys.game.components.Player;
 import com.maximys.game.components.PlayerInGame;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,11 @@ public class GameService {
         this.game = game;
     }
 
-    public Integer[][] getMap() {
+    public GameMap getMap() {
         return game.getMap();
+    }
+    public Game getGame(){
+        return game;
     }
     public Integer[][] printMap() {
         return game.printMap();
