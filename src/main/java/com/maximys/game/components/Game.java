@@ -15,7 +15,8 @@ public class Game {
     private List<Player> players;
     private GameMap gameMap;
     @JsonIgnore
-    // TODO ЧТ21 - Убрать это поле и заменить его на методы
+    /* TODO ЧТ21 - Убрать это поле и заменить его на методы
+    */
     private Integer[][] fields;
     private Integer indexMove;
 
