@@ -14,18 +14,23 @@ import java.util.Random;
 public class Game {
     private List<Player> players;
     private GameMap gameMap;
-    @JsonIgnore
-    /* TODO ЧТ21 - Убрать это поле и заменить его на методы
-    */
-    private Integer[][] fields;
     private Integer indexMove;
 
     @Autowired
     public Game(GameMap gameMap) {
         this.players = new ArrayList<Player>();
         this.gameMap = gameMap;
-        this.fields = gameMap.generateMaze();
         this.indexMove = 1;
+    }
+    public Integer[][] getFields(){
+        return gameMap.getMap();
+    }
+    public Integer selectPosition(int x, int y){
+        return gameMap.getMap()[y][x];
+    }
+
+    public void changePosition(int x, int y, int value){
+        gameMap.getMap()[y][x] = value;
     }
 
     public GameMap getMap() {
@@ -44,13 +49,6 @@ public class Game {
         this.players = players;
     }
 
-    public Integer[][] getFields() {
-        return fields;
-    }
-
-    public void setFields(Integer[][] fields) {
-        this.fields = fields;
-    }
 
     public Integer getIndexMove() {
         return indexMove;
@@ -75,12 +73,12 @@ public class Game {
         return players.size();
     }
     public Integer[][] printMap() {
-        for(Integer[] str : fields){
+        for(Integer[] str : getFields()){
             System.out.println();
             for (Integer symbol : str)
                 System.out.printf("%4d", symbol);
         }
-        return fields;
+        return getFields();
     }
     public boolean addPlayer(String nickname){
         if(players != null) {
@@ -100,10 +98,10 @@ public class Game {
         while (true) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
-            if(fields[y][x] == 0){
+            if(selectPosition(x, y) == 0){
                 player.setPositionX(x);
                 player.setPositionY(y);
-                fields[y][x] = player.getIndexMove() * 11;
+                changePosition(x, y, player.getIndexMove() * 11);
                 player.setId(String.valueOf(player.getIndexMove() * 11));
                 break;
             }
@@ -148,7 +146,7 @@ public class Game {
         int y = player.getPositionY(); // Текущая позиция игрока по Y
 
         // Проверка на выход за границы карты
-        if (newX < 0 || newX >= fields[0].length || newY < 0 || newY >= fields.length) {
+        if (newX < 0 || newX >= getFields()[0].length || newY < 0 || newY >= getFields().length) {
             return "Выход за границы карты";
         }
 
@@ -160,26 +158,26 @@ public class Game {
         }
 
         // Проверка на наличие еды
-        if (fields[newY][newX] == 5) { // Изменено с map[newX][newY] на map[newY][newX]
+        if (selectPosition(newX, newY) == 5) { // Изменено с map[newX][newY] на map[newY][newX]
             Integer countFood = player.getCountFood();
             player.setCountFood(countFood + 1);
-            fields[y][x] = 0; // Сброс старой позиции
+            changePosition(newX, newY, 0); // Сброс старой позиции
             player.setPositionX(newX);
             player.setPositionY(newY);
-            fields[newY][newX] = player.getIndexMove() * 11; // Изменено с map[newX][newY] на map[newY][newX]
+            changePosition(newX, newY, player.getIndexMove() * 11); // Изменено с map[newX][newY] на map[newY][newX]
             return "Вы успешно сделали шаг и покушали)";
         }
-        if (fields[newY][newX] != 0) { // Изменено с map[newX][newY] на map[newY][newX]
+        if (selectPosition(newX, newY) != 0) { // Изменено с map[newX][newY] на map[newY][newX]
             return "На этом месте есть препятствие или игрок";
         }
 
         // Проверка на наличие препятствий
 
         // Обновляем карту и позицию игрока
-        fields[y][x] = 0; // Сброс старой позиции
+        changePosition(newX, newY, 0); // Сброс старой позиции
         player.setPositionX(newX);
         player.setPositionY(newY);
-        fields[newY][newX] = player.getIndexMove() * 11; // Изменено с map[newX][newY] на map[newY][newX]
+        changePosition(newX, newY, player.getIndexMove() * 11); // Изменено с map[newX][newY] на map[newY][newX]
         return "Вы успешно сделали шаг";
     }
 }
