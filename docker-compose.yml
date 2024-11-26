@@ -1,9 +1,12 @@
-version: '3.8'
+version: '3'
 services:
   game:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: gamehost
     ports:
-      - "8080:8080"
+      - "8080:8881"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/Game
       SPRING_DATASOURCE_USERNAME: user

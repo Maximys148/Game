@@ -12,6 +12,8 @@ import java.util.Random;
 @Data
 @Component
 public class Game {
+    // TODO Сделать, чтобы при завершение работы бота, бот отправляет серверу уведомление о выходе из игры, и сервер кикал(удалял) его с сервера
+
     private List<Player> players;
     private GameMap gameMap;
     private Integer indexMove;
@@ -95,16 +97,13 @@ public class Game {
         }
         Random random = new Random();
         //выдаю игроку стартовую позицию
-        while (true) {
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
-            if(selectPosition(x, y) == 0){
-                player.setPositionX(x);
-                player.setPositionY(y);
-                changePosition(x, y, player.getIndexMove() * 11);
-                player.setId(String.valueOf(player.getIndexMove() * 11));
-                break;
-            }
+        int x = random.nextInt(10);
+        int y = random.nextInt(10);
+        if(selectPosition(x, y) == 0){
+            player.setPositionX(x);
+            player.setPositionY(y);
+            changePosition(x, y, player.getIndexMove() * 11);
+            player.setId(String.valueOf(player.getIndexMove() * 11));
         }
         players.add(player);
         return true;

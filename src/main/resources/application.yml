@@ -3,8 +3,6 @@ spring:
     view:
       prefix: "/WEB-INF/jsp/"
       suffix: ".jsp"
-  application:
-    name: Game
   datasource:
     driver-class-name: org.postgresql.Driver
     user-name: "postgres"
@@ -20,4 +18,4 @@ spring:
       ddl-auto: update
 
 server:
-  port: 1111
+  port: 8881
