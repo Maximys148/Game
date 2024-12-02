@@ -70,4 +70,16 @@ public class GameController {
         logger.info("Игрок " + moveDTO.getNickname() + " ваш ход не защитан по причине - " + moveInfo);
         return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_PLAYER_MOVE, moveInfo));
     }
+    @PostMapping(value = "/disconnect")
+    public ResponseEntity<GameResponseDTO> disconnect(@RequestBody RegistrationDTO registrationDTO) throws JsonProcessingException {
+        gameService.deletePLayer(registrationDTO.getNickName());
+        logger.info("Игрок " + registrationDTO.getNickName()+ " вышел из игры");
+        /*if(!gameService.deletePLayer(registrationDTO.getNickName())) {
+            GameResponseDTO gameResponseDTO = new GameResponseDTO(ResponseStatus.ERROR_NOT_REMOVE_PLAYER, "Невозможно удалить игрока из игры");
+            logger.info("Игрок " + registrationDTO.getNickName() + " не удалён из игры по причине - " + gameResponseDTO.getMessage());
+            return ResponseEntity.status(400).body(gameResponseDTO);
+        }
+        logger.info("Игрок " + registrationDTO.getNickName() + "удалён из игры");*/
+        return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, null,null));
+    }
 }

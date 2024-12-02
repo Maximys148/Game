@@ -46,4 +46,7 @@ public class GameService {
     public String move(String nickName, int newX, int newY) {
         return game.move(nickName, newX, newY);
     }
+    public boolean deletePLayer(String nickName){
+        return game.deletePLayer(nickName);
+    }
 }

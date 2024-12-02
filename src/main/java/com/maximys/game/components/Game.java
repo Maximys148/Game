@@ -12,7 +12,7 @@ import java.util.Random;
 @Data
 @Component
 public class Game {
-    // TODO Сделать, чтобы при завершение работы бота, бот отправляет серверу уведомление о выходе из игры, и сервер кикал(удалял) его с сервера
+    // TODO Сделать, чтобы при завершение работы бота, бот отправляет серверу уведомление о выходе из игры, и сервер кикал(удалял) его с сервера и сервак прописывал логи
 
     private List<Player> players;
     private GameMap gameMap;
@@ -118,6 +118,15 @@ public class Game {
         }
         PlayerInGame playerInGame = new PlayerInGame(player, this);
         return playerInGame;
+    }
+    public boolean deletePLayer(String nickName){
+        for (Player randomplayer : players) {
+            if (randomplayer.getNickName().equals(nickName)) {
+                players.remove(randomplayer);
+                return true;
+            }
+        }
+        return false;
     }
     public String move(String nickName, int newX, int newY) {
         Player player = null;
