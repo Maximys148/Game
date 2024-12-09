@@ -28,6 +28,9 @@ public class GameMap {
                 visited[y][x] = false; // Все клетки изначально непосещены
             }
         }
+        this.map = generateMaze();
+        removeRandomWalls();
+        addFood();
     }
 
     public int getNumberOfFood() {
@@ -84,7 +87,19 @@ public class GameMap {
                 generatePath(newX, newY);
             }
         }
-        addFood();
+    }
+
+    public void removeRandomWalls() {
+        int totalWalls = (width * height) - (numberOfFood + (width * height) / 4); // Общее количество стен
+        int wallsToRemove = (int) (totalWalls * 0.3); // 30% от общего количества стен
+
+        for (int i = 0; i < wallsToRemove; i++) {
+            int x = random.nextInt(width);
+            int y = random.nextInt(height);
+            if (map[y][x] == 1) { // Если это стена
+                map[y][x] = 0; // Удаляем стену
+            }
+        }
     }
 
     private boolean isInBounds(int x, int y) {
@@ -92,13 +107,14 @@ public class GameMap {
     }
 
     public void addFood() {
-        int foodPlaced = 0;
-        while (numberOfFood != 0) {
+        // int foodPlaced = 0;
+        int numberOfFoodInMethod = numberOfFood;
+        while (numberOfFoodInMethod != 0) {
             int x = random.nextInt(width); // Генерируем координаты по ширине
             int y = random.nextInt(height); // Генерируем координаты по высоте
             if (map[y][x] == 0) { // Проверяем, что клетка проходимая
                 map[y][x] = 5; // Размещаем еду
-                numberOfFood--;
+                numberOfFoodInMethod--;
             }
         }
     }

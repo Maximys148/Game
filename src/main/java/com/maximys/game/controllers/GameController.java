@@ -48,7 +48,7 @@ public class GameController {
 
     @PostMapping(value = "/validateStart")
     public ResponseEntity<GameResponseDTO> updateGameInfo(@RequestBody RegistrationDTO registrationDTO) throws JsonProcessingException {
-        if(gameService.countPlayer() <= 1) {
+        if(gameService.countPlayer() <= 0) {
             GameResponseDTO gameResponseDTO = new GameResponseDTO(ResponseStatus.ERROR_NOT_ENOUGH_PLAYERS, "Сервер ещё не заполнен(не хватает игроков), подождите и обновите страницу http://localhost:1111/game/validateStart");
             logger.info("Игроку " + registrationDTO.getNickName() + " не присоединился к игре по причине - " + gameResponseDTO.getMessage());
             return ResponseEntity.status(400).body(gameResponseDTO);
@@ -61,11 +61,11 @@ public class GameController {
         String moveInfo = gameService.move(moveDTO.getNickname(), moveDTO.getX(), moveDTO.getY());
         if(moveInfo.equals("Вы успешно сделали шаг")){
             logger.info("Игрок " + moveDTO.getNickname() + " " + moveInfo);
-            return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, mapper.writeValueAsString(gameService.getMap()), BodyType.MAP));
+            return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, "Вы успешно сделали шаг", mapper.writeValueAsString(gameService.getMap()), BodyType.MAP));
         }
         if(moveInfo.equals("Вы успешно сделали шаг и покушали)")){
             logger.info("Игрок " + moveDTO.getNickname() + " "  + moveInfo);
-            return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, null, mapper.writeValueAsString(gameService.getMap()), BodyType.MAP));
+            return ResponseEntity.ok(new GameResponseDTO(ResponseStatus.SUCCESS, "Вы успешно сделали шаг и покушали)", mapper.writeValueAsString(gameService.getMap()), BodyType.MAP));
         }
         logger.info("Игрок " + moveDTO.getNickname() + " ваш ход не защитан по причине - " + moveInfo);
         return ResponseEntity.status(400).body(new GameResponseDTO(ResponseStatus.ERROR_PLAYER_MOVE, moveInfo));

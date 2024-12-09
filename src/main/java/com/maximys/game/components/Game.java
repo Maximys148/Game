@@ -141,7 +141,7 @@ public class Game {
         if (player == null)
             return "Такого игрока нет в игре";
 
-        if (gameMap.getNumberOfFood() == 1){
+        if (gameMap.getNumberOfFood() == 0){
             return "Игра окончена, вся еда съедена";
         }
         if (!player.getIndexMove().equals(indexMove)) {
@@ -171,10 +171,11 @@ public class Game {
         if (selectPosition(newX, newY) == 5) { // Изменено с map[newX][newY] на map[newY][newX]
             Integer countFood = player.getCountFood();
             player.setCountFood(countFood + 1);
-            changePosition(newX, newY, 0); // Сброс старой позиции
+            changePosition(player.getPositionX(), player.getPositionY(), 0); // Сброс старой позиции
             player.setPositionX(newX);
             player.setPositionY(newY);
             changePosition(newX, newY, player.getIndexMove() * 11); // Изменено с map[newX][newY] на map[newY][newX]
+            gameMap.setNumberOfFood(gameMap.getNumberOfFood() - 1);
             return "Вы успешно сделали шаг и покушали)";
         }
         if (selectPosition(newX, newY) != 0) { // Изменено с map[newX][newY] на map[newY][newX]
@@ -184,7 +185,7 @@ public class Game {
         // Проверка на наличие препятствий
 
         // Обновляем карту и позицию игрока
-        changePosition(newX, newY, 0); // Сброс старой позиции
+        changePosition(player.getPositionX(), player.getPositionY(), 0); // Сброс старой позиции
         player.setPositionX(newX);
         player.setPositionY(newY);
         changePosition(newX, newY, player.getIndexMove() * 11); // Изменено с map[newX][newY] на map[newY][newX]

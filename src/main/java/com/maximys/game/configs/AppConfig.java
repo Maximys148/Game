@@ -11,6 +11,6 @@ public class AppConfig {
     }
     @Bean
     public Game game(){
-        return new Game(new GameMap(20, 20, 1));
+        return new Game(new GameMap(20, 20, 2));
     }
 }
